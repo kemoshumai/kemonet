@@ -9,4 +9,4 @@ permissions:
 
 jobs:
   quality:
-    uses: kemoshumai/typescript-policy/.github/workflows/typescript-quality.yml@eaeb52ec096c48ffac0afe7bf407684c8094f99f
+    uses: kemoshumai/typescript-policy/.github/workflows/typescript-quality.yml@cb7fee6313a8caf5ff8695308f6044d7aaa93c5a
