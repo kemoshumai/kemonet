@@ -9,20 +9,4 @@ permissions:
 
 jobs:
   quality:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run typecheck
-      - run: npm run lint
-      - run: npm test
-      - run: npm run build
-      - run: npm run deps:check
-      - run: npm run dead-code
-      - uses: semgrep/semgrep-action@v1
-        with:
-          config: semgrep.yml
+    uses: kemoshumai/typescript-policy/.github/workflows/typescript-quality.yml@eaeb52ec096c48ffac0afe7bf407684c8094f99f
