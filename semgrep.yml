@@ -3,13 +3,6 @@ rules:
     languages: [typescript, javascript]
     message: Empty catch blocks hide failures
     severity: ERROR
-    patterns:
-      - pattern-either:
-          - pattern: |
-              try:
-                ...
-              catch (...) {}
-          - pattern: |
-              try:
-                ...
-              catch {}
+    pattern-either:
+      - pattern: catch ($ERROR) {}
+      - pattern: catch {}
