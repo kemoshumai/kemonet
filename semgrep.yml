@@ -1,0 +1,15 @@
+rules:
+  - id: no-empty-catch
+    languages: [typescript, javascript]
+    message: Empty catch blocks hide failures
+    severity: ERROR
+    patterns:
+      - pattern-either:
+          - pattern: |
+              try:
+                ...
+              catch (...) {}
+          - pattern: |
+              try:
+                ...
+              catch {}

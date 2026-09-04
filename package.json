@@ -1,0 +1,39 @@
+{
+  "name": "kemonet",
+  "version": "0.1.0",
+  "description": "Framework-agnostic TypeScript library for kemonet",
+  "license": "MIT",
+  "type": "module",
+  "files": ["dist"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest",
+    "mutation": "stryker run",
+    "deps:check": "depcruise --validate .dependency-cruiser.cjs src",
+    "dead-code": "knip",
+    "semgrep": "semgrep --config semgrep.yml src",
+    "check": "npm run typecheck && npm run lint && npm run test && npm run deps:check && npm run dead-code && npm run semgrep"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@stryker-mutator/core": "^10.0.0",
+    "@stryker-mutator/typescript-checker": "^10.0.0",
+    "@stryker-mutator/vitest-runner": "^10.0.0",
+    "dependency-cruiser": "^18.0.0",
+    "eslint": "^10.0.0",
+    "fast-check": "^4.0.0",
+    "knip": "^6.0.0",
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.0.0",
+    "vitest": "^5.0.0"
+  }
+}
