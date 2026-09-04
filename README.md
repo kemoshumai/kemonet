@@ -14,3 +14,5 @@ npm run mutation
 ```
 
 The repository is currently an implementation-independent TypeScript scaffold. Domain APIs and tests will be added in later changes.
+
+`npm run semgrep` requires the Semgrep CLI. Mutation testing becomes executable after the first test suite is added.
