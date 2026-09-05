@@ -3,6 +3,8 @@
 > This document was written by an AI after reading the draft paper, for carrying the AI's understanding into future AI sessions. It only organizes concepts found in the draft. Nothing in this document should be treated as an implemented feature or a finalized design.
 >
 > The draft paper is titled `Kemoverse: Federated virtual universes on Web`. In the draft, `Kemoverse` is interpreted as the current project, `Kemonet`.
+>
+> Decisions made after reviewing the draft, including strict repository boundaries, the first multiplayer milestone, profile and identity semantics, and the Avataro/OIDC model, are recorded in `first-implementation-handoff.md`. Future work must read both documents; this draft summary does not override later recorded decisions.
 
 ## 1. Concept summary
 
@@ -258,25 +260,32 @@ The draft describes a direction, not a complete implementation specification. Th
 
 Future Kemonet implementation should preserve the following principles.
 
-1. **Design as an extension of the Web**  
+1. **Design as an extension of the Web**
+
    Prefer URLs, HTTP(S), browser APIs, and standard protocols rather than assuming a dedicated client or a single service.
 
-2. **Preserve federation**  
+2. **Preserve federation**
+
    Do not unconditionally centralize Mondos or Avataros in a Kemonet database. Assume independent operators and interoperability.
 
-3. **Separate public APIs from internal implementation**  
+3. **Separate public APIs from internal implementation**
+
    Define APIs for Mondo authors clearly enough that they can accomplish their goals without depending on private modules.
 
-4. **Separate general functions from demo-specific functions**  
+4. **Separate general functions from demo-specific functions**
+
    Add to Kemonet only functions that can be reused by multiple Mondos. Keep work-specific presentation and requirements in the consuming project.
 
-5. **Preserve user agency**  
+5. **Preserve user agency**
+
    Do not make a user's identity, avatar, consent, or shared information depend on the convenience of one Mondo.
 
-6. **Make trust boundaries explicit**  
+6. **Make trust boundaries explicit**
+
    Do not treat Mondos, Avataros, IdPs, signaling servers, and TURN or SFU services as one trusted entity. Apply authentication, authorization, and input validation at each boundary.
 
-7. **Do not confuse the draft with a finalized specification**  
+7. **Do not confuse the draft with a finalized specification**
+
    Do not turn details absent from the draft into de facto requirements merely because they are convenient for implementation. Record and evaluate them as design decisions.
 
 ## 12. Current repository note
