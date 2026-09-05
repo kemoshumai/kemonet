@@ -42,6 +42,27 @@ describe("parseProfileDocument", () => {
     ).toThrow(KemonetValidationError);
   });
 
+  it("accepts an unknown avatar format for future Mondo support", () => {
+    expect(
+      parseAvatarReference({
+        url: "https://example.com/avatar.custom",
+        format: "custom-avatar-v1"
+      })
+    ).toEqual({
+      url: "https://example.com/avatar.custom",
+      format: "custom-avatar-v1"
+    });
+  });
+
+  it("rejects credentials in avatar URLs", () => {
+    expect(() =>
+      parseAvatarReference({
+        url: "https://user:password@example.com/avatar.vrm",
+        format: "vrm"
+      })
+    ).toThrow(KemonetValidationError);
+  });
+
   it("rejects a profile with an unsupported version", () => {
     expect(() =>
       parseProfileDocument({ version: 2, displayName: "Alice" })

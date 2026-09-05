@@ -34,6 +34,7 @@ describe("Kemonet messages", () => {
         id: "self",
         profile: { version: 1, displayName: "Alice" }
       },
+      selfState: state,
       participants: [
         {
           participant: {

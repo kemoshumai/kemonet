@@ -61,6 +61,7 @@ export interface ParticipantPresence {
 export interface SessionJoined extends ProtocolMessage {
   readonly type: "session-joined";
   readonly self: Participant;
+  readonly selfState: AvatarState;
   readonly participants: readonly ParticipantPresence[];
 }
 
@@ -248,6 +249,7 @@ export function parseKemonetMessage(value: unknown): KemonetMessage {
         version,
         type: "session-joined",
         self: parseParticipant(value["self"]),
+        selfState: parseAvatarState(value["selfState"]),
         participants: parseParticipants(value["participants"])
       };
     case "participant-joined":

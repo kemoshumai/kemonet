@@ -53,6 +53,10 @@ export function requireFiniteNumber(value: unknown, path: string): number {
 export function requireHttpUrl(value: unknown, path: string): string {
   const stringValue = requireString(value, path);
 
+  if (stringValue.length > 4096) {
+    throw new KemonetValidationError(path, "must not exceed 4096 characters");
+  }
+
   if (stringValue !== stringValue.trim()) {
     throw new KemonetValidationError(path, "must not have leading or trailing whitespace");
   }
