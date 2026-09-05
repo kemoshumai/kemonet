@@ -6,7 +6,19 @@
 
 ## 1. Status at the time of this handoff
 
-The Kemonet repository is still a framework-agnostic TypeScript library scaffold. The domain APIs, Avataro protocol, Mondo session protocol, OIDC integration, avatar storage, rendering, and real-time multiplayer behavior described below have not yet been implemented.
+The Kemonet repository started as a framework-agnostic TypeScript library scaffold. The first public profile and transport-independent session protocol models are now implemented on the first implementation branch. Avataro, OIDC integration, avatar storage, rendering, and a concrete real-time server remain outside the Kemonet core.
+
+Current implemented Kemonet core capabilities:
+
+- Runtime parsing and normalization of Kemonet Profile Document v1
+- Runtime parsing and serialization of avatar references
+- Runtime parsing and serialization of versioned session messages
+- Unauthenticated participant models
+- Session join, session snapshot, participant join, participant leave, profile update, and avatar state update messages
+- Position, quaternion, and semantic animation-state models
+- Public package exports with generated declarations for Git package consumers
+
+The core implementation deliberately does not provide a server or a browser runtime. The first `kemonet-about` Mondo is the concrete consumer used to exercise these APIs.
 
 The first implementation branch was created as:
 
@@ -310,15 +322,25 @@ Transform data will likely include position and orientation. Animation data shou
 
 The following details remain undecided and must be designed explicitly:
 
-- Whether the first `kemonet-about` transport is WebSocket, WebRTC data channels, or a staged combination
-- How peers discover one another
-- Whether the server is authoritative for position in the first Mondo
-- Update rate, interpolation, ordering, loss tolerance, and backpressure
+The first `kemonet-about` vertical slice now uses WebSocket as a concrete Mondo transport. This is an application-level choice, not a Kemonet protocol restriction. Kemonet message encoding and validation remain transport-independent so a later Mondo can use WebRTC data channels or another transport.
+
+The first `kemonet-about` transport decisions are:
+
+- WebSocket client/server relay for the initial multi-user implementation
+- Server-issued opaque participant IDs
+- Server-relayed participant snapshots and state changes
+- Client-side movement with server-side message validation, bounds checks, and rate limiting
+- No voice communication in the first slice
+
+The following remain open for later iterations:
+
+- WebRTC data channels and signaling
+- Peer discovery and signaling topology
+- A stronger server-authoritative movement model and anti-cheat policy
+- Interpolation, ordering, loss tolerance, and backpressure guarantees
 - Reconnection and resume behavior
-- Session identifiers and admission
-- Validation and rate limiting of remote state
-- How avatar profile changes propagate
-- Whether voice is part of the first milestone
+- How avatar profile changes propagate across persistent profiles and sessions
+- Whether voice is added to a later milestone
 
 The draft prefers WebRTC for peer communication and allows signaling through WebSocket. A practical first implementation must not quietly turn a temporary WebSocket-only synchronization system into the Kemonet protocol itself. Protocol data and transport framing must remain separable.
 
@@ -444,21 +466,18 @@ OIDC claims and the Kemonet Profile Document must remain separate concepts. An a
 
 The following matters were not decided in the discussion represented by this handoff:
 
-- Exact TypeScript public API names
+- Further evolution of the TypeScript public API names
 - Exact Profile Document JSON Schema and string limits
 - Canonical media type for a Kemonet Profile Document
 - Canonical avatar format identifiers
 - Forward-compatible handling of unknown profile fields and versions
-- First multiplayer transport and topology
-- Authoritative-state and anti-cheat policy
-- Voice communication in the first milestone
-- `kemonet-about` server framework and deployment target
-- Database and asset storage implementation
-- Upload limits and asset validation limits
-- Profile editing authorization and recovery
+- WebRTC transport and topology after the initial WebSocket Mondo
+- Stronger authoritative-state and anti-cheat policy
+- `kemonet-about` production server framework and deployment target
+- Database and object storage implementation beyond the current file store
+- Upload limits and deeper asset validation limits
+- Profile editing authorization and recovery beyond the current bearer capability
 - Retention and deletion policy
-- Exact default avatar asset and license
-- Exact movement, camera, and interaction design
 - Avatar animation retargeting across VRM and generic GLB files
 - OIDC scope names and custom claim names
 - Whether a public profile URL is part of the eventual Avataro specification
@@ -487,4 +506,4 @@ For `kemonet-about`:
 - Test participant join, update, leave, reconnect, and malformed-message behavior.
 - Run its build and all available quality checks independently.
 
-A successful `kemonet-about` demo is evidence that Kemonet's public API is usable. It is not permission to introduce dependencies from Kemonet back to `kemonet-about`.
+A successful `kemonet-about` Mondo is evidence that Kemonet's public API is usable. It is not permission to introduce dependencies from Kemonet back to `kemonet-about`.
